@@ -1,19 +1,18 @@
-import org.example.Assignment.FilterInvoice;
-import org.example.Assignment.Invoice;
-import org.example.Assignment.SAP;
-import org.example.Assignment.SAP_BasedInvoiceSender;
+import org.example.Assignment.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class SAP_BasedInvoiceSenderTest {
 
     @Test
-    public void testWhenLowInvoicesSent(){
+    public void testWhenLowInvoicesSent() throws FailToSendSAPInvoiceException {
 
                 FilterInvoice Fi = mock(FilterInvoice.class);
                 SAP sap = mock(SAP.class);
@@ -31,7 +30,7 @@ public class SAP_BasedInvoiceSenderTest {
 
     }
     @Test
-    public void testWhenNoInvoices(){
+    public void testWhenNoInvoices() throws FailToSendSAPInvoiceException {
 
                 FilterInvoice filter = mock(FilterInvoice.class);
                 SAP sap = mock(SAP.class);
@@ -43,6 +42,23 @@ public class SAP_BasedInvoiceSenderTest {
 
                 verify(sap, times(0));
             }
+    @Test
+    public void testThrowExceptionWhenBadInvoice() throws FailToSendSAPInvoiceException {
+
+        FilterInvoice Fi = mock(FilterInvoice.class);
+        SAP sap = mock(SAP.class);
+        SAP_BasedInvoiceSender sender = new SAP_BasedInvoiceSender(Fi, sap);
+
+        Invoice badInvoice = new Invoice("Alex", 50);
+
+        doThrow(new FailToSendSAPInvoiceException()).when(sap).send(badInvoice);
+
+
+        List<Invoice> failedInvoices = sender.sendLowValuedInvoices();
+        assertTrue(failedInvoices.contains(badInvoice));
+
+        assertEquals(1, failedInvoices.size());
+    }
 
 
 }

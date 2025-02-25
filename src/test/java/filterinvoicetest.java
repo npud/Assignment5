@@ -4,7 +4,9 @@ import org.example.Assignment.Invoice;
 import org.example.Assignment.QueryInvoicesDAO;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,8 +32,6 @@ public class filterinvoicetest {
         mockDao.save(invoice4);
         mockDao.save(invoice5);
         mockDao.save(invoice6);
-        //when(mockDao.all()).thenReturn(Arrays.asList(invoice4,invoice5,invoice6));
-        //assertEquals(invoice4).isEqualTo(mockDao.all());
         assertEquals(invoice4, mockDao.all());
 
 
