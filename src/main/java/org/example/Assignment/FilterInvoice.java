@@ -7,9 +7,6 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FilterInvoice {
 

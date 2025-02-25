@@ -1,9 +1,12 @@
+import org.example.Assignment.Database;
+import org.example.Assignment.FilterInvoice;
 import org.example.Assignment.Invoice;
 import org.example.Assignment.QueryInvoicesDAO;
 import org.junit.Test;
 
 import java.util.Arrays;
 
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -19,6 +22,17 @@ public class filterinvoicetest {
     }
     @Test
     public void filterInvoicesStubbedTest(){
+        Database db = mock(Database.class);
+        QueryInvoicesDAO mockDao = new QueryInvoicesDAO(db);
+        Invoice invoice4 = new Invoice("Sal", 50);
+        Invoice invoice5 = new Invoice("Jef", 20);
+        Invoice invoice6 = new Invoice("Mark", 5);
+        mockDao.save(invoice4);
+        mockDao.save(invoice5);
+        mockDao.save(invoice6);
+        //when(mockDao.all()).thenReturn(Arrays.asList(invoice4,invoice5,invoice6));
+        //assertEquals(invoice4).isEqualTo(mockDao.all());
+        assertEquals(invoice4, mockDao.all());
 
 
     }
